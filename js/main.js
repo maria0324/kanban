@@ -28,6 +28,9 @@ const app = new Vue({
                 this.columns[columnIndex + 1].tasks.push(task);
             }
         },
+        deleteTask(columnIndex, taskIndex) {
+            this.columns[columnIndex].tasks.splice(taskIndex, 1);
+        }
        
     }
 });
