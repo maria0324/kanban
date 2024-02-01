@@ -22,6 +22,12 @@ const app = new Vue({
             this.newTask.description = '';
             this.newTask.deadline = '';
         },
+        moveTask(columnIndex, taskIndex) {
+            if (columnIndex < this.columns.length - 1) {
+                const task = this.columns[columnIndex].tasks.splice(taskIndex, 1)[0];
+                this.columns[columnIndex + 1].tasks.push(task);
+            }
+        },
        
     }
 });
