@@ -11,8 +11,24 @@
     <title>Product App</title> 
 </head> 
 <body> 
-    <div id="app"> 
- 
+    <div id="app">
+        <div v-for="(column, columnIndex) in columns" :key="column.id">
+            <h2>{{ column.title }}</h2>
+            <div v-for="(task, taskIndex) in column.tasks" :key="taskIndex">
+                <h3>{{ task.title }}</h3>
+                <p>{{ task.description }}</p>
+                <p>Deadline: {{ task.deadline }}</p>
+                <p>Created at: {{ task.createdAt }}</p>
+                <button @click="moveTask(columnIndex, taskIndex)">Move to next column</button>
+                <button @click="deleteTask(columnIndex, taskIndex)">Delete</button>
+            </div>
+            <div v-if="columnIndex === 0">
+                <input v-model="newTask.title" placeholder="Title">
+                <input v-model="newTask.description" placeholder="Description">
+                <input v-model="newTask.deadline" placeholder="Deadline">
+                <button @click="addTask">Add task</button>
+            </div>
+        </div>
     </div> 
 </body> 
 </html>

@@ -13,3 +13,15 @@ const app = new Vue({
             deadline: ''
         }
     },
+    methods: {
+        addTask() {
+            const task = Object.assign({}, this.newTask);
+            task.createdAt = new Date();
+            this.columns[0].tasks.push(task);
+            this.newTask.title = '';
+            this.newTask.description = '';
+            this.newTask.deadline = '';
+        },
+       
+    }
+});
