@@ -53,9 +53,20 @@ const app = new Vue({
                 this.editTaskIndex = null;
                 this.editColumnIndex = null;
             }
+        },
+        moveTaskBack(columnIndex, taskIndex, reason) {  
+            if (columnIndex > 0) {  
+                const task = this.columns[columnIndex].tasks[taskIndex];  
+                task.reasonForMovingBack = reason;  
+                this.columns[columnIndex].tasks.splice(taskIndex, 1);  
+                this.columns[columnIndex - 1].tasks.push(task);  
+            }  
         }
     }  
 });
+
+    
+
             
          
        
