@@ -19,10 +19,14 @@
                 <p>{{ task.description }}</p> 
                 <p>Deadline: {{ task.deadline }}</p> 
                 <p>Created at: {{ task.createdAt }}</p> 
+                <p v-if="task.lastEditedAt">Last Edited at: {{ task.lastEditedAt }}</p>
                 <button @click="moveTask(columnIndex, taskIndex)">Move to next column</button> 
                 <button @click="deleteTask(columnIndex, taskIndex)">Delete</button> 
-                <button v-if="columnIndex === 2" @click="moveTaskBack(columnIndex, taskIndex, 'Need more work')">Move back to second column</button>
-                <button v-if="taskIndex < 3" @click="editTask(columnIndex, taskIndex)">Edit</button> 
+                <button v-if="columnIndex === 2" @click="editTask(columnIndex, taskIndex)">Edit</button> 
+                <div v-if="columnIndex === 2">
+                    <input v-model="task.reasonForMovingBack" placeholder="Reason for moving back">
+                    <button @click="moveTaskBack(columnIndex, taskIndex, task.reasonForMovingBack)">Move back to second column</button>
+                </div>
             </div> 
             <div v-if="columnIndex === 0"> 
                 <input v-model="newTask.title" placeholder="Title"> 
@@ -32,7 +36,6 @@
                 <button v-if="editTaskIndex !== null && editColumnIndex !== null" @click="saveEdit">Save Edit</button>
             </div> 
         </div> 
-    </div> 
-                  
+    </div>  
 </body>  
 </html> 
