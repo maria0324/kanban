@@ -11,7 +11,9 @@ const app = new Vue({
             title: '',
             description: '',
             deadline: ''
-        }
+        },
+        editTaskIndex: null,
+        editColumnIndex: null
     },
     methods: {
         addTask() {
@@ -31,16 +33,29 @@ const app = new Vue({
         deleteTask(columnIndex, taskIndex) {
             this.columns[columnIndex].tasks.splice(taskIndex, 1);
         },
-        editTask(columnId, taskIndex, newTitle, newContent) {
-            const column = this.columns.find(col => col.id === columnId);
-            if (column) {
-                const task = column.tasks[taskIndex];
-                task.title = newTitle;
-                task.content = newContent;
-                task.lastEditedAt = new Date().toLocaleString();
+        editTask(columnIndex, taskIndex) { 
+            this.editTaskIndex = taskIndex;
+            this.editColumnIndex = columnIndex;
+            this.newTask.title = this.columns[columnIndex].tasks[taskIndex].title;
+            this.newTask.description = this.columns[columnIndex].tasks[taskIndex].description;
+            this.newTask.deadline = this.columns[columnIndex].tasks[taskIndex].deadline;
+        },
+        
+        saveEdit() {
+            if (this.editTaskIndex !== null && this.editColumnIndex !== null) {
+                this.columns[this.editColumnIndex].tasks[this.editTaskIndex].title = this.newTask.title;
+                this.columns[this.editColumnIndex].tasks[this.editTaskIndex].description = this.newTask.description;
+                this.columns[this.editColumnIndex].tasks[this.editTaskIndex].deadline = this.newTask.deadline;
+                this.columns[this.editColumnIndex].tasks[this.editTaskIndex].lastEditedAt = new Date().toLocaleString();
+                this.newTask.title = '';
+                this.newTask.description = '';
+                this.newTask.deadline = '';
+                this.editTaskIndex = null;
+                this.editColumnIndex = null;
             }
-            this.saveState();
-            this.moveTask(2, 3, taskIndex);
-       
-    }
+        }
+    }  
 });
+            
+         
+       

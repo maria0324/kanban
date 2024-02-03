@@ -1,34 +1,37 @@
-<!doctype html> 
-<html lang="ru"> 
-<head> 
-    <meta charset="UTF-8"> 
-    <meta name="viewport" 
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"> 
-    <meta http-equiv="X-UA-Compatible" content="ie=edge"> 
-    <script defer src="js/vue.js"></script> 
-    <script defer src="js/main.js"></script> 
-    <link rel="stylesheet" href="css/styles.css"> 
-    <title>Product App</title> 
-</head> 
-<body> 
-    <div id="app">
-        <div v-for="(column, columnIndex) in columns" :key="column.id">
-            <h2>{{ column.title }}</h2>
-            <div v-for="(task, taskIndex) in column.tasks" :key="taskIndex">
-                <h3>{{ task.title }}</h3>
-                <p>{{ task.description }}</p>
-                <p>Deadline: {{ task.deadline }}</p>
-                <p>Created at: {{ task.createdAt }}</p>
-                <button @click="moveTask(columnIndex, taskIndex)">Move to next column</button>
-                <button @click="deleteTask(columnIndex, taskIndex)">Delete</button>
-            </div>
-            <div v-if="columnIndex === 0">
-                <input v-model="newTask.title" placeholder="Title">
-                <input v-model="newTask.description" placeholder="Description">
-                <input v-model="newTask.deadline" placeholder="Deadline">
-                <button @click="addTask">Add task</button>
-            </div>
-        </div>
-    </div> 
-</body> 
-</html>
+<!doctype html>  
+<html lang="ru">  
+<head>  
+    <meta charset="UTF-8">  
+    <meta name="viewport"  
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">  
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">  
+    <script defer src="js/vue.js"></script>  
+    <script defer src="js/main.js"></script>  
+    <link rel="stylesheet" href="css/styles.css">  
+    <title>Product App</title>  
+</head>  
+<body>  
+    <div id="app"> 
+        <div v-for="(column, columnIndex) in columns" :key="column.id"> 
+            <h2>{{ column.title }}</h2> 
+            <div v-for="(task, taskIndex) in column.tasks" :key="taskIndex"> 
+                <h3>{{ task.title }}</h3> 
+                <p>{{ task.description }}</p> 
+                <p>Deadline: {{ task.deadline }}</p> 
+                <p>Created at: {{ task.createdAt }}</p> 
+                <p v-if="task.lastEditedAt">Last Edited at: {{ task.lastEditedAt }}</p>
+                <button @click="moveTask(columnIndex, taskIndex)">Move to next column</button> 
+                <button @click="deleteTask(columnIndex, taskIndex)">Delete</button> 
+                <button v-if="taskIndex < 3" @click="editTask(columnIndex, taskIndex)">Edit</button> 
+            </div> 
+            <div v-if="columnIndex === 0"> 
+                <input v-model="newTask.title" placeholder="Title"> 
+                <input v-model="newTask.description" placeholder="Description"> 
+                <input v-model="newTask.deadline" placeholder="Deadline"> 
+                <button @click="addTask">Add task</button> 
+                <button v-if="editTaskIndex !== null && editColumnIndex !== null" @click="saveEdit">Save Edit</button>
+            </div> 
+        </div> 
+    </div>   
+</body>  
+</html> 
