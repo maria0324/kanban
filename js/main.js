@@ -30,7 +30,17 @@ const app = new Vue({
         },
         deleteTask(columnIndex, taskIndex) {
             this.columns[columnIndex].tasks.splice(taskIndex, 1);
-        }
+        },
+        editTask(columnId, taskIndex, newTitle, newContent) {
+            const column = this.columns.find(col => col.id === columnId);
+            if (column) {
+                const task = column.tasks[taskIndex];
+                task.title = newTitle;
+                task.content = newContent;
+                task.lastEditedAt = new Date().toLocaleString();
+            }
+            this.saveState();
+            this.moveTask(2, 3, taskIndex);
        
     }
 });
