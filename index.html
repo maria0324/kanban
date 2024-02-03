@@ -8,7 +8,7 @@
     <script defer src="js/vue.js"></script>  
     <script defer src="js/main.js"></script>  
     <link rel="stylesheet" href="css/styles.css">  
-    <title>Product App</title>  
+    <title>Kanban</title>  
 </head>  
 <body>  
     <div id="app"> 
@@ -20,6 +20,7 @@
                 <p>Deadline: {{ task.deadline }}</p> 
                 <p>Created at: {{ task.createdAt }}</p> 
                 <p v-if="task.lastEditedAt">Last Edited at: {{ task.lastEditedAt }}</p>
+                <p v-if="columnIndex === 1 && task.reasonForMovingBack">Reason for moving back: {{ task.reasonForMovingBack }}</p>
                 <button @click="moveTask(columnIndex, taskIndex)">Move to next column</button> 
                 <button @click="deleteTask(columnIndex, taskIndex)">Delete</button> 
                 <button v-if="columnIndex === 2" @click="editTask(columnIndex, taskIndex)">Edit</button> 
@@ -31,7 +32,7 @@
             <div v-if="columnIndex === 0"> 
                 <input v-model="newTask.title" placeholder="Title"> 
                 <input v-model="newTask.description" placeholder="Description"> 
-                <input v-model="newTask.deadline" placeholder="Deadline"> 
+                <input type="date" v-model="newTask.deadline" placeholder="Deadline"> 
                 <button @click="addTask">Add task</button> 
                 <button v-if="editTaskIndex !== null && editColumnIndex !== null" @click="saveEdit">Save Edit</button>
             </div> 

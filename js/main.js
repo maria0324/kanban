@@ -24,11 +24,19 @@ const app = new Vue({
             this.newTask.description = '';
             this.newTask.deadline = '';
         },
-        moveTask(columnIndex, taskIndex) {
-            if (columnIndex < this.columns.length - 1) {
-                const task = this.columns[columnIndex].tasks.splice(taskIndex, 1)[0];
-                this.columns[columnIndex + 1].tasks.push(task);
-            }
+        moveTask(columnIndex, taskIndex) { 
+            if (columnIndex < this.columns.length - 1) { 
+                const task = this.columns[columnIndex].tasks.splice(taskIndex, 1)[0]; 
+                if (columnIndex + 1 === 3) {
+                    const deadlineDate = new Date(task.deadline);
+                    if (deadlineDate < new Date()) {
+                        task.status = 'Просрочено';
+                    } else {
+                        task.status = 'Выполнено в срок';
+                    }
+                }
+                this.columns[columnIndex + 1].tasks.push(task); 
+            } 
         },
         deleteTask(columnIndex, taskIndex) {
             this.columns[columnIndex].tasks.splice(taskIndex, 1);
